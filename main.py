@@ -13,12 +13,17 @@ NO_OF_HIGH_SCORES = 10
 CHARACTER_WILDCARD = "*"
 
 
+def game_scoring_function(game_word, no_of_mistakes_made):
+    return 100*(len(game_word)-no_of_mistakes_made)
+
+
 def main():
     
     game_rules = GameRules(game_alphabet=GAME_ALPHABET,
                            word_pool=WORD_POOL)
                            
-    high_score_table = HighScoreTable(no_of_high_scores=NO_OF_HIGH_SCORES)
+    high_score_table = HighScoreTable(no_of_high_scores=NO_OF_HIGH_SCORES,
+                                      game_scoring_function=game_scoring_function)
     
     frontend_drawer = HangmanASCIIArt(character_wildcard=CHARACTER_WILDCARD)
                            
@@ -30,8 +35,5 @@ def main():
 
 
 if __name__ == "__main__":
-    
     main()
-    
-    
-    
+

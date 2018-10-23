@@ -8,7 +8,7 @@ class GameRules:
         self.game_alphabet = game_alphabet
         self.word_pool = word_pool
         
-        # TRADITIONAL HANGMAN GAMES USUALLY ALLOW FOR 5 MISTAKES, BUT THIS CUSTOMIZABLE
+        # TRADITIONAL HANGMAN GAMES USUALLY ALLOW FOR 5 MISTAKES. THIS IS CUSTOMIZABLE -
         # ALTHOUGH, THE FRONTEND NEEDS TO CHANGE AS WELL
         self.no_of_mistakes_allowed = 5
 

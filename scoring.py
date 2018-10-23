@@ -1,6 +1,10 @@
 import os
 
 
+class HighScoreTableConstructionError(Exception):
+    pass
+
+
 class TableSerializer:
 
     @staticmethod
@@ -20,16 +24,23 @@ class TableSerializer:
 
 class HighScoreTable:
 
-    def __init__(self, no_of_high_scores,
-                 high_score_persist_path=os.path.join(".",
-                                                      ".hangman_scores")):
+    def __init__(self, no_of_high_scores, game_scoring_function,
+                 high_score_persist_path=os.path.join(".", ".hangman_scores")):
 
         self.no_of_high_scores = no_of_high_scores
+
+        try:
+            assert (callable(game_scoring_function))
+        except AssertionError:
+            raise HighScoreTableConstructionError("game_scoring_function must be a callable!")
+
+        self.scoring_function = game_scoring_function
+
         self.serializer = TableSerializer
 
         self.high_score_persist_path = high_score_persist_path
-        self.high_score_file_path =  os.path.join(self.high_score_persist_path,
-                                                  "high_scores.dat")
+        self.high_score_file_path = os.path.join(self.high_score_persist_path,
+                                                 "high_scores.dat")
 
         self.high_scores = []
         self._load_or_init_high_scores()
@@ -62,13 +73,10 @@ class HighScoreTable:
                 serialized_entry = self.serializer.serialize_entry(name, score)
                 high_score_file.write(serialized_entry)
 
-    @staticmethod
-    def _scoring_function(game_word, no_of_mistakes_made):
-        return 100*(len(game_word)-no_of_mistakes_made)
-
     def score_and_store(self, player_name, game_word, no_of_mistakes_made):
 
-        current_player_score = self._scoring_function(game_word=game_word, no_of_mistakes_made=no_of_mistakes_made)
+        current_player_score = self.scoring_function(game_word=game_word,
+                                                     no_of_mistakes_made=no_of_mistakes_made)
 
         self._update_high_scores(new_scores=[(player_name, current_player_score)])
         self._persist_high_scores()
