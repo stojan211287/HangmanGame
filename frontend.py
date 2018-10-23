@@ -16,7 +16,7 @@ class HangmanASCIIArt:
         self.gallows.append('     |')
         self.gallows.append('=======')
         
-        self.hangman = {}
+        self.hangman = dict()
         self.hangman[0] = [' 0   |']
         self.hangman[1] = [' 0   |', ' |   |']
         self.hangman[2] = [' 0   |', '/|   |']
@@ -43,3 +43,4 @@ class HangmanASCIIArt:
     def draw_game_state(self, game_state_index):
         for element in self.game_state_art[game_state_index]:
             print(element)
+

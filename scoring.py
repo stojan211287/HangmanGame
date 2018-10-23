@@ -21,7 +21,8 @@ class TableSerializer:
 class HighScoreTable:
 
     def __init__(self, no_of_high_scores,
-                 high_score_persist_path=os.path.join(".", ".hangman_scores")):
+                 high_score_persist_path=os.path.join(".",
+                                                      ".hangman_scores")):
 
         self.no_of_high_scores = no_of_high_scores
         self.serializer = TableSerializer

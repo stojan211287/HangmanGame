@@ -4,31 +4,9 @@ import random
 
 from collections import defaultdict
 
-from rules import GameRulesException
-
-
-class GuessNotAllowed(Exception):
-    pass
-
-
-class PlayerGuessWasWrong(Exception):
-    pass
-
-
-class PlayerAlreadyGuessedCharacter(Exception):
-    pass
-
-
-class PlayerWon(Exception):
-    pass
-
-
-class PlayerLost(Exception):
-    pass
-
-
-class GameAbortedAtStart(Exception):
-    pass
+from errors_rules import GameRulesException
+from errors_backend import GameAbortedAtStart, GuessNotAllowed, PlayerAlreadyGuessedCharacter, PlayerGuessWasWrong, \
+                            PlayerLost, PlayerWon
 
 
 class HangmanGame:
@@ -146,12 +124,11 @@ class HangmanGame:
         print(os.linesep)
         self.frontend.draw_game_state(game_state_index=self.no_of_mistakes_made)
         print(os.linesep)
-        print("%s, you've made %d mistakes! You are allowed at most %d." %
-             (self.player_name,
-              self.no_of_mistakes_made,
-              self.game_rules.no_of_mistakes_allowed))
+        print("%s, you've made %d mistakes! You are allowed at most %d." % (self.player_name,
+                                                                            self.no_of_mistakes_made,
+                                                                            self.game_rules.no_of_mistakes_allowed))
         print(os.linesep)
-        print(self.display_string)
+        self._display_word()
         print(os.linesep)
     
     def _guess_a_letter(self):
@@ -188,8 +165,7 @@ class HangmanGame:
                     self.display_string[letter_position] = letter
                     
         if self.frontend.character_wildcard not in self.display_string:
-            congrats_msg = "Congrats, %s! You have correctly guessed the word %s!" % \
-            (self.player_name, self.game_word)
+            congrats_msg = "Congrats, %s! You have correctly guessed the word %s!" % (self.player_name, self.game_word)
                 
             raise PlayerWon(congrats_msg)
     
@@ -211,4 +187,6 @@ class HangmanGame:
         print(os.linesep)
 
         self.high_score_table.print_high_scores()
-        
+
+    def _display_word(self):
+        print(" ".join(self.display_string))
