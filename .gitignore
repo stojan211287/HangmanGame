@@ -1,4 +1,4 @@
-/__pycache__
-/.hangman_scores
-/.idea
-
+.hangman_scores
+.idea
+venv
+*/__pycache__
