@@ -1,13 +1,8 @@
 ## A simple Hangman Game
 
-### Build in Python3
 
-To play, install Python3.7 and run
+To play,
 
-	python3 main.py
+* Make sure you have Python3.7 installed
+* Run `make dev && make play`
 
-or, run a bash script with
-
-	./start.sh
-
-For the second variant, make sure the script is executable. 
