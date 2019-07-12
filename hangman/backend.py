@@ -113,6 +113,7 @@ class HangmanGame:
             1) You win if you guess all the characters in a secret word
             2) The characters in the secret word all come from the set %s
             3) You can make up to %d wrong guesses
+
             Enjoy!
             """
             % (self.game_rules.game_alphabet, self.game_rules.no_of_mistakes_allowed)

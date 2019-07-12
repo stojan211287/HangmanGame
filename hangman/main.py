@@ -1,3 +1,6 @@
+import os
+import base64
+
 from rules import GameRules
 from scoring import HighScoreTable
 
@@ -7,7 +10,17 @@ from frontend import HangmanASCIIArt
 # FOR DEFINING THE GAME ALPHABET
 from string import ascii_letters, digits
 
-WORD_POOL = ["3dhubs", "marvin", "print", "filament", "order", "layer"]
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+WORD_POOL_FILE = os.path.join(ROOT_DIR, "words", "solutions")
+
+with open(WORD_POOL_FILE, "r") as solution_file:
+    scrambled_solutions = solution_file.read().split(",")
+
+WORD_POOL = [
+    base64.b64decode(scrambled_solution.encode("utf-8")).decode("utf-8")
+    for scrambled_solution in scrambled_solutions
+]
+
 GAME_ALPHABET = ascii_letters + digits
 NO_OF_HIGH_SCORES = 10
 CHARACTER_WILDCARD = "*"
